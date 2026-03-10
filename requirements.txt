@@ -1,0 +1,21 @@
+numpy
+pandas
+scipy
+scikit-learn
+
+# Entropia
+antropy
+entropyhub
+
+# Visualizzazione
+matplotlib
+seaborn
+plotly
+
+# Infrastruttura e Dati
+confluent-kafka  # Kafka Python client for producing and consuming messages
+influxdb-client
+
+# Esecuzione e Notebook
+jupyterlab
+papermill

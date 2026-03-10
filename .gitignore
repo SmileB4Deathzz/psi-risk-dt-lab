@@ -1,0 +1,4 @@
+src/__pycache__
+data
+notebooks/.ipynb_checkpoints
+results
