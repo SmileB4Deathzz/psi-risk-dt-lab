@@ -18,7 +18,7 @@ class IoTProducer:
         }
         payload = json.dumps(data).encode('utf-8')
         self.producer.produce(self.topic, payload)
-        self.producer.poll(0) # Gestisce i callback internamente
+        self.producer.poll(0)
 
     def flush(self):
         self.producer.flush()

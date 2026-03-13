@@ -4,12 +4,15 @@ import EntropyHub as eh
 from scipy.stats import entropy as scipy_entropy
 
 def calc_shannon(data):
-    """
-    Calculates the Shannon Entropy of the data.
-    """
-    counts, _ = np.histogram(data, bins='fd', density=True)
-    
-    return scipy_entropy(counts)
+    data = (data - np.mean(data)) / np.std(data) #normalize data
+
+    bins = int(np.sqrt(len(data)))
+    counts, _ = np.histogram(data, bins=bins)
+
+    probs = counts / counts.sum()
+    probs = probs[probs > 0]
+
+    return scipy_entropy(probs)
 
 def calc_sample_entropy(data):
     """

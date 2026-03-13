@@ -1,7 +1,6 @@
 def generate_risk_score(delta_h, std_baseline):
     """
-    Assegna un livello di rischio basato su quante 'sigma' (deviazioni standard) 
-    il ΔH si è allontanato dalla norma.
+    Generates a risk score based on the ΔH and the standard deviation of the baseline entropy.
     """
     z_score = delta_h / std_baseline
     

@@ -9,26 +9,14 @@ echo "--Build e avvio dei container Docker..."
 docker compose -f ../docker/docker-compose.yml up -d --build
 
 # Wait for Kafka to be ready
-echo "--Attesa che Kafka sia pronto..."
-KAFKA_READY=false
-RETRIES=0
-MAX_RETRIES=60
+echo "--Waiting for Kafka..."
 
-while [ "$KAFKA_READY" = false ] && [ $RETRIES -lt $MAX_RETRIES ]; do
-  if docker exec kafka_broker /usr/bin/kafka-broker-api-versions --bootstrap-server localhost:9092 > /dev/null 2>&1; then
-    KAFKA_READY=true
-    echo "✅ Kafka è pronto!"
-  else
-    RETRIES=$((RETRIES + 1))
-    echo "⏳ Tentativo $RETRIES/$MAX_RETRIES - Kafka non è ancora pronto, attesa 1 secondo..."
-    sleep 1
-  fi
+until [ "$(docker inspect -f '{{.State.Health.Status}}' kafka_broker)" = "healthy" ]; do
+  echo "Kafka not ready yet..."
+  sleep 3
 done
 
-if [ "$KAFKA_READY" = false ]; then
-  echo "❌ Kafka non è stato avviato in tempo. Uscita."
-  exit 1
-fi
+echo "Kafka ready!"
 
 # Generazione dei Dataset
 echo "--Generazione dei dataset (Baseline e Drift)..."
